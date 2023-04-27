@@ -31,6 +31,19 @@ module.exports = {
                     },
                 },
             },
+            email: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                unique: true,
+                validate: {
+                    isEmail: {
+                        msg: "Please provide a valid email address",
+                    },
+                    notEmpty: {
+                        msg: "Email address is required",
+                    },
+                },
+            },
             gender: {
                 type: Sequelize.STRING,
                 allowNull: true,
