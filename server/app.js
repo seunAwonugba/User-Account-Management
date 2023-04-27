@@ -1,15 +1,16 @@
 require("dotenv").config();
 const express = require("express");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-const cors = require("cors");
-
 const { sequelize } = require("./models/index");
+const { authRouter } = require("./router/auth");
 
 const app = express();
-const port = process.env.PORT || 8000;
-const host = process.env.HOST || "localhost";
+const port = 8000;
+const host = "localhost";
+const cors = require("cors");
+const { errorMiddleware } = require("./middleware/errorMiddleware");
 
-app.use(cors);
+app.use(express.json());
 
 app.get("/", (req, res) => {
     return res.status(StatusCodes.OK).json({
@@ -17,6 +18,10 @@ app.get("/", (req, res) => {
         data: ReasonPhrases.OK,
     });
 });
+
+app.use("/api/v1/auth", authRouter);
+
+app.use(errorMiddleware);
 
 const startServer = async () => {
     try {
