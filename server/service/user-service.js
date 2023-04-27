@@ -10,14 +10,19 @@ class UserService {
 
     async signUp(payload) {
         const data = await createUserSchema.validateAsync(payload);
+
         if (!validator.default.isStrongPassword(data.password)) {
             throw new UnprocessableEntity(
                 "Your password must include a minimum of 8 characters, at least one number, and a combination of uppercase and lowercase letters."
             );
         }
+        console.log(data.password);
+
+        const createUser = await this.repository.createUser(data);
+
         return {
             success: true,
-            data,
+            data: createUser,
         };
     }
 }

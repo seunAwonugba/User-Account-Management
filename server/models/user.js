@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     User.beforeCreate(async (user) => {
-        user.password = bcryptjs.hash(user.password, 10);
+        user.password = await bcryptjs.hash(user.password, 10);
     });
     return User;
 };
