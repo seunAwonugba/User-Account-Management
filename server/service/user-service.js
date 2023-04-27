@@ -3,6 +3,7 @@ const validator = require("validator");
 const { createUserSchema } = require("../validator/createUserSchema");
 const { UnprocessableEntity } = require("../error");
 const { GenerateToken } = require("../utils");
+const { sendConfirmEmail } = require("../utils/mailer");
 
 class UserService {
     constructor() {
@@ -23,6 +24,16 @@ class UserService {
             id: createUser.id,
             email: createUser.email,
         });
+
+        const url = `${process.env.CLIENT_URL}/email-confirmation/?token=${token}`;
+
+        sendConfirmEmail(
+            createUser.email,
+            "Email Confirmation",
+            "verify_email",
+            createUser.firstName,
+            url
+        );
 
         return {
             success: true,
