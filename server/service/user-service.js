@@ -16,8 +16,7 @@ class UserService {
                 "Your password must include a minimum of 8 characters, at least one number, and a combination of uppercase and lowercase letters."
             );
         }
-        console.log(data.password);
-
+        
         const createUser = await this.repository.createUser(data);
 
         return {
