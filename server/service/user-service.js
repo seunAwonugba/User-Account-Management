@@ -2,6 +2,7 @@ const { UserRepository } = require("../repository/user-repository");
 const validator = require("validator");
 const { createUserSchema } = require("../validator/createUserSchema");
 const { UnprocessableEntity } = require("../error");
+const { GenerateToken } = require("../utils");
 
 class UserService {
     constructor() {
@@ -16,12 +17,17 @@ class UserService {
                 "Your password must include a minimum of 8 characters, at least one number, and a combination of uppercase and lowercase letters."
             );
         }
-        
+
         const createUser = await this.repository.createUser(data);
+        const token = await GenerateToken({
+            id: createUser.id,
+            email: createUser.email,
+        });
 
         return {
             success: true,
             data: createUser,
+            token,
         };
     }
 }
