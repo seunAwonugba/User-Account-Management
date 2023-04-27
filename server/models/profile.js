@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            Profile.belongsTo(models.user);
         }
     }
     Profile.init(
@@ -57,6 +58,14 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: true,
             },
             nationality: { type: DataTypes.STRING, allowNull: true },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                unique: {
+                    args: true,
+                    msg: "Profile unique to a user",
+                },
+            },
         },
         {
             sequelize,

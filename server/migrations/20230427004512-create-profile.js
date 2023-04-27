@@ -65,6 +65,11 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: true,
             },
+            userId: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                unique: true,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
