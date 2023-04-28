@@ -110,3 +110,11 @@
 .form-container {
     padding-top: 20px;
 }
+
+.button-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+}
