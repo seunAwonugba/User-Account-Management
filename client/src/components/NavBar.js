@@ -14,6 +14,9 @@ export default function NavBar() {
                 <li>
                     <Link to="/sign-up">Sign up</Link>
                 </li>
+                <li>
+                    <Link to="/email-confirmation">Email sent</Link>
+                </li>
             </ul>
         </nav>
     );

@@ -75,9 +75,4 @@ export default function SignUp() {
             </Paper>
         </Grid>
     );
-    // return (
-    //     <div className="form-cover">
-    //         <h1>Sign up</h1>
-    //     </div>
-    // );
 }

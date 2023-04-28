@@ -37,9 +37,15 @@ class UserService {
 
         return {
             success: true,
-            data: createUser,
+            data: `Confirmation email sent to ${createUser.email}, please proceed to your mail box to confirm your email address`,
             token,
         };
+
+        // return {
+        //     success: true,
+        //     data: createUser,
+        //     token,
+        // };
     }
 }
 
