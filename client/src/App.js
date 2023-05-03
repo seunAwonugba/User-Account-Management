@@ -7,6 +7,7 @@ import Login from "./page/Login";
 import SignUp from "./page/SignUp";
 import EmailConfirmationSent from "./page/EmailConfirmationSent";
 import { ToastContainer } from "react-toastify";
+import EmailConfirmation from "./page/EmailConfirmation";
 
 function App() {
     return (
@@ -21,6 +22,10 @@ function App() {
                     <Route
                         path="/email-confirmation-sent"
                         element={<EmailConfirmationSent />}
+                    ></Route>
+                    <Route
+                        path="/email-confirmation"
+                        element={<EmailConfirmation />}
                     ></Route>
                 </Routes>
                 <ToastContainer theme="dark" />

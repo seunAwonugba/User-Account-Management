@@ -4,10 +4,12 @@ const { createUserSchema } = require("../validator/createUserSchema");
 const { UnprocessableEntity } = require("../error");
 const { GenerateToken } = require("../utils");
 const { sendConfirmEmail } = require("../utils/mailer");
+const { TokenRepository } = require("../repository/token-repository");
 
 class UserService {
     constructor() {
-        this.repository = new UserRepository();
+        this.userRepository = new UserRepository();
+        this.tokenRepository = new TokenRepository();
     }
 
     async signUp(payload) {
@@ -19,10 +21,16 @@ class UserService {
             );
         }
 
-        const createUser = await this.repository.createUser(data);
+        const createUser = await this.userRepository.createUser(data);
+
         const token = await GenerateToken({
             id: createUser.id,
             email: createUser.email,
+        });
+
+        await this.tokenRepository.createToken({
+            accessToken: token,
+            userId: createUser.id,
         });
 
         const url = `${process.env.CLIENT_URL}/email-confirmation/?token=${token}`;

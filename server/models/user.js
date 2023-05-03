@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
                     name: "userId",
                 },
             });
+
+            User.hasOne(models.token, {
+                foreignKey: {
+                    name: "userId",
+                },
+            });
         }
 
         toJSON() {
