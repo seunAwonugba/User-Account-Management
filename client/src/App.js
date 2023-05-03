@@ -5,7 +5,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./page/Home";
 import Login from "./page/Login";
 import SignUp from "./page/SignUp";
-import EmailConfirmation from "./page/EmailConfirmation";
+import EmailConfirmationSent from "./page/EmailConfirmationSent";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     return (
@@ -18,10 +19,11 @@ function App() {
                     <Route path="/sign-up" element={<SignUp />}></Route>
 
                     <Route
-                        path="/email-confirmation"
-                        element={<EmailConfirmation />}
+                        path="/email-confirmation-sent"
+                        element={<EmailConfirmationSent />}
                     ></Route>
                 </Routes>
+                <ToastContainer theme="dark" />
             </div>
         </>
     );

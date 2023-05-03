@@ -3,15 +3,15 @@ const express = require("express");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const { sequelize } = require("./models/index");
 const { authRouter } = require("./router/auth");
+const cors = require("cors");
 
 const app = express();
 const port = 8000;
 const host = "localhost";
-const cors = require("cors");
 const { errorMiddleware } = require("./middleware/errorMiddleware");
 
 app.use(express.json());
-
+app.use(cors());
 app.get("/", (req, res) => {
     return res.status(StatusCodes.OK).json({
         success: true,
