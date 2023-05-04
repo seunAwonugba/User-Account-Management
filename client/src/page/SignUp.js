@@ -71,7 +71,6 @@ export default function SignUp() {
                 toast.error(response.data.data);
             }
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
 
             toast.error(error.response.data.data);

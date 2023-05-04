@@ -25,7 +25,7 @@ const handlebarOptions = {
 // use a template file with nodemailer
 transporter.use("compile", hbs(handlebarOptions));
 
-const sendConfirmEmail = (to, subject, template, name, url) => {
+const sendConfirmEmail = async (to, subject, template, name, url) => {
     const mailOptions = {
         from: process.env.MAIL_USER,
         to: to,

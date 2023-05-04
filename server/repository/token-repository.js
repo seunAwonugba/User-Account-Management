@@ -19,6 +19,16 @@ class TokenRepository {
 
         return findToken;
     }
+
+    async deleteToken(userId) {
+        const deleteToken = token.destroy({
+            where: {
+                userId,
+            },
+        });
+
+        return deleteToken
+    }
 }
 
 module.exports = { TokenRepository };

@@ -17,8 +17,10 @@ module.exports = (sequelize, DataTypes) => {
             });
 
             User.hasOne(models.token, {
+                onDelete: "CASCADE",
                 foreignKey: {
                     name: "userId",
+                    allowNull: false,
                 },
             });
         }

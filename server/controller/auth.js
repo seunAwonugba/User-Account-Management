@@ -12,4 +12,14 @@ const signUp = async (req, res, next) => {
     }
 };
 
-module.exports = { signUp };
+const confirmEmail = async (req, res, next) => {
+    try {
+        const user = await userService.confirmEmail(req.query);
+        console.log(user);
+        res.status(StatusCodes.OK).json(user);
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { signUp, confirmEmail };
