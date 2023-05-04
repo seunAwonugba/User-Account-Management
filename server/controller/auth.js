@@ -15,11 +15,18 @@ const signUp = async (req, res, next) => {
 const confirmEmail = async (req, res, next) => {
     try {
         const user = await userService.confirmEmail(req.query);
-        console.log(user);
         res.status(StatusCodes.OK).json(user);
     } catch (error) {
         next(error);
     }
 };
 
-module.exports = { signUp, confirmEmail };
+const sendPasswordResetLink = async (req, res, next) => {
+    try {
+        const user = await userService.sendPasswordResetLink(req.body);
+        return res.status(StatusCodes.CREATED).json(user);
+    } catch (error) {
+        next(error);
+    }
+};
+module.exports = { signUp, confirmEmail, sendPasswordResetLink };

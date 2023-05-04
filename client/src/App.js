@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import EmailConfirmation from "./page/EmailConfirmation";
 import ResetPassword from "./page/ResetPassword";
 import ResetPasswordEmail from "./page/ResetPasswordEmail";
+import ResetPasswordSent from "./page/ResetPasswordSent";
 
 function App() {
     return (
@@ -17,26 +18,27 @@ function App() {
             <NavBar />
             <div className="container">
                 <Routes>
-                    <Route path="/" element={<Home />}></Route>
-                    <Route path="/login" element={<Login />}></Route>
-                    <Route path="/sign-up" element={<SignUp />}></Route>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/sign-up" element={<SignUp />} />
 
                     <Route
                         path="/email-confirmation-sent"
                         element={<EmailConfirmationSent />}
-                    ></Route>
+                    />
                     <Route
                         path="/email-confirmation"
                         element={<EmailConfirmation />}
-                    ></Route>
+                    />
                     <Route
                         path="/reset-password-email"
                         element={<ResetPasswordEmail />}
-                    ></Route>
+                    />
                     <Route
-                        path="/reset-password"
-                        element={<ResetPassword />}
-                    ></Route>
+                        path="/reset-password-sent"
+                        element={<ResetPasswordSent />}
+                    />
+                    <Route path="/reset-password" element={<ResetPassword />} />
                 </Routes>
                 <ToastContainer theme="dark" />
             </div>

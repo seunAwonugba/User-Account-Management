@@ -1,5 +1,4 @@
 import * as React from "react";
-import TextField from "@mui/material/TextField";
 import {
     Button,
     FormControl,
@@ -24,9 +23,6 @@ export default function ResetPassword() {
     const paperStyle = { padding: "30px 20px", width: 550 };
     const marginStyle = { marginTop: "15px" };
 
-    const [firstName, setFirstName] = React.useState("");
-    const [lastName, setLastName] = React.useState("");
-    const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [isLoading, setIsLoading] = React.useState("");
@@ -50,9 +46,6 @@ export default function ResetPassword() {
         setIsLoading(true);
 
         const userResponse = {
-            firstName,
-            lastName,
-            email,
             password,
             repeat_password: confirmPassword,
         };
@@ -91,39 +84,6 @@ export default function ResetPassword() {
                 </Grid>
 
                 <form onSubmit={resetPassword}>
-                    <TextField
-                        id="outlined-basic"
-                        label="First name"
-                        variant="outlined"
-                        placeholder="First name"
-                        style={marginStyle}
-                        value={firstName}
-                        onChange={(e) => inputChangeHandler(setFirstName, e)}
-                        fullWidth
-                    />
-                    <TextField
-                        id="outlined-basic"
-                        label="Last name"
-                        variant="outlined"
-                        placeholder="Last name"
-                        type="text"
-                        style={marginStyle}
-                        value={lastName}
-                        onChange={(e) => inputChangeHandler(setLastName, e)}
-                        fullWidth
-                    />
-                    <TextField
-                        id="outlined-basic"
-                        label="Email"
-                        variant="outlined"
-                        placeholder="Email"
-                        type="email"
-                        style={marginStyle}
-                        value={email}
-                        onChange={(e) => inputChangeHandler(setEmail, e)}
-                        fullWidth
-                    />
-
                     <FormControl
                         variant="outlined"
                         fullWidth

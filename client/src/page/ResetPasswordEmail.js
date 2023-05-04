@@ -1,14 +1,6 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-import {
-    Button,
-    FormControl,
-    Grid,
-    InputLabel,
-    OutlinedInput,
-    Paper,
-    Typography,
-} from "@mui/material";
+import { Button, Grid, Paper, Typography } from "@mui/material";
 import baseUrl from "../base_url/base-url";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -37,20 +29,19 @@ export default function ResetPasswordEmail() {
 
         try {
             const response = await baseUrl.post(
-                "/auth/reset-password",
+                "/auth/send-password-reset-link",
                 userResponse
             );
             setIsLoading(false);
 
             if (response.data.success === true) {
-                navigate("/email-confirmation-sent");
+                navigate("/reset-password-sent");
             } else {
                 setIsLoading(false);
                 toast.error(response.data.data);
             }
         } catch (error) {
             setIsLoading(false);
-
             toast.error(error.response.data.data);
         }
     };

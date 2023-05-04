@@ -7,7 +7,7 @@ class UserRepository {
         return createUser;
     }
 
-    async findUser(id) {
+    async findUserById(id) {
         const findUser = user.findOne({
             where: {
                 id,
@@ -17,7 +17,17 @@ class UserRepository {
         return findUser;
     }
 
-    async deleteUser(id) {
+    async findUserByEmail(email) {
+        const findUser = user.findOne({
+            where: {
+                email,
+            },
+        });
+
+        return findUser;
+    }
+
+    async deleteUserById(id) {
         const deleteUser = user.destroy({
             where: {
                 id,

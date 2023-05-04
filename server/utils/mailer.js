@@ -46,4 +46,25 @@ const sendConfirmEmail = async (to, subject, template, name, url) => {
     });
 };
 
-module.exports = { sendConfirmEmail };
+const sendResetPasswordLink = async (to, subject, template, name, url) => {
+    const mailOptions = {
+        from: process.env.MAIL_USER,
+        to: to,
+        subject: subject,
+        template: template,
+        context: {
+            name,
+            url,
+        },
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Email sent: " + info.response);
+        }
+    });
+};
+
+module.exports = { sendConfirmEmail, sendResetPasswordLink };

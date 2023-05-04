@@ -25,4 +25,12 @@ const createUserSchema = Joi.object({
     }),
 });
 
-module.exports = { createUserSchema };
+const emailSchema = Joi.object({
+    email: Joi.string().trim().email().required().lowercase().messages({
+        "string.email": "Please provide a valid email address",
+        "any.required": "Email address is required",
+        "string.empty": "Email address cannot be empty",
+    }),
+});
+
+module.exports = { createUserSchema, emailSchema };

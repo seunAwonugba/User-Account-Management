@@ -1,9 +1,12 @@
 const { UserRepository } = require("../repository/user-repository");
 const validator = require("validator");
-const { createUserSchema } = require("../validator/createUserSchema");
+const {
+    createUserSchema,
+    emailSchema,
+} = require("../validator/createUserSchema");
 const { UnprocessableEntity, BadRequest } = require("../error");
 const { GenerateToken, VerifyToken } = require("../utils");
-const { sendConfirmEmail } = require("../utils/mailer");
+const { sendConfirmEmail, sendResetPasswordLink } = require("../utils/mailer");
 const { TokenRepository } = require("../repository/token-repository");
 const { ProfileRepository } = require("../repository/profile-repository");
 
@@ -53,7 +56,7 @@ class UserService {
     }
 
     async confirmEmail({ id, token }) {
-        const user = await this.userRepository.findUser(id);
+        const user = await this.userRepository.findUserById(id);
 
         if (!user) {
             throw new BadRequest("User not found");
@@ -69,7 +72,7 @@ class UserService {
         const verifyToken = VerifyToken(userToken);
 
         if (verifyToken.message) {
-            await this.userRepository.deleteUser(id);
+            await this.userRepository.deleteUserById(id);
 
             await this.tokenRepository.deleteToken(id);
 
@@ -94,6 +97,36 @@ class UserService {
         return {
             success: true,
             data: "Email confirmation is successful, kindly proceed to login if you are not redirected",
+        };
+    }
+
+    async sendPasswordResetLink(payload) {
+        const data = await emailSchema.validateAsync(payload);
+
+        const user = await this.userRepository.findUserByEmail(data.email);
+
+        if (!user) {
+            throw new BadRequest("User not found");
+        }
+
+        const token = await GenerateToken({
+            id: user.id,
+            email: user.email,
+        });
+
+        const url = `${process.env.CLIENT_URL}/reset-password/?id=${user.id}&token=${token}`;
+
+        await sendResetPasswordLink(
+            user.email,
+            "Password Reset!!!",
+            "password_reset",
+            user.firstName,
+            url
+        );
+
+        return {
+            success: true,
+            data: `Reset password link sent to ${user.email}, proceed to your mail box to reset your password`,
         };
     }
 }
