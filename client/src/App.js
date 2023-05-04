@@ -8,6 +8,8 @@ import SignUp from "./page/SignUp";
 import EmailConfirmationSent from "./page/EmailConfirmationSent";
 import { ToastContainer } from "react-toastify";
 import EmailConfirmation from "./page/EmailConfirmation";
+import ResetPassword from "./page/ResetPassword";
+import ResetPasswordEmail from "./page/ResetPasswordEmail";
 
 function App() {
     return (
@@ -26,6 +28,14 @@ function App() {
                     <Route
                         path="/email-confirmation"
                         element={<EmailConfirmation />}
+                    ></Route>
+                    <Route
+                        path="/reset-password-email"
+                        element={<ResetPasswordEmail />}
+                    ></Route>
+                    <Route
+                        path="/reset-password"
+                        element={<ResetPassword />}
                     ></Route>
                 </Routes>
                 <ToastContainer theme="dark" />

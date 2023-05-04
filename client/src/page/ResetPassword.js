@@ -7,9 +7,10 @@ import {
     InputLabel,
     OutlinedInput,
     Paper,
+    Typography,
 } from "@mui/material";
 import baseUrl from "../base_url/base-url";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -17,39 +18,48 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 
-export default function Login() {
+export default function ResetPassword() {
     const navigate = useNavigate();
 
     const paperStyle = { padding: "30px 20px", width: 550 };
     const marginStyle = { marginTop: "15px" };
 
+    const [firstName, setFirstName] = React.useState("");
+    const [lastName, setLastName] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState("");
     const [isLoading, setIsLoading] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
     const inputChangeHandler = (setFunction, event) => {
         setFunction(event.target.value);
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowConfirmPassword = () =>
+        setShowConfirmPassword((show) => !show);
 
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 
-    const login = async (e) => {
+    const resetPassword = async (e) => {
         e.preventDefault();
         setIsLoading(true);
 
         const userResponse = {
+            firstName,
+            lastName,
             email,
             password,
+            repeat_password: confirmPassword,
         };
 
         try {
             const response = await baseUrl.post(
-                "/auth/reset-password",
+                "/auth/create-user",
                 userResponse
             );
             setIsLoading(false);
@@ -74,10 +84,34 @@ export default function Login() {
         <Grid>
             <Paper elevation={20} style={paperStyle}>
                 <Grid align="center">
-                    <h2>Login</h2>
+                    <h2>Reset Password</h2>
+                    <Typography variant="caption">
+                        Complete this form to reset your password!
+                    </Typography>
                 </Grid>
 
-                <form onSubmit={login}>
+                <form onSubmit={resetPassword}>
+                    <TextField
+                        id="outlined-basic"
+                        label="First name"
+                        variant="outlined"
+                        placeholder="First name"
+                        style={marginStyle}
+                        value={firstName}
+                        onChange={(e) => inputChangeHandler(setFirstName, e)}
+                        fullWidth
+                    />
+                    <TextField
+                        id="outlined-basic"
+                        label="Last name"
+                        variant="outlined"
+                        placeholder="Last name"
+                        type="text"
+                        style={marginStyle}
+                        value={lastName}
+                        onChange={(e) => inputChangeHandler(setLastName, e)}
+                        fullWidth
+                    />
                     <TextField
                         id="outlined-basic"
                         label="Email"
@@ -126,21 +160,55 @@ export default function Login() {
                         />
                     </FormControl>
 
+                    <FormControl
+                        variant="outlined"
+                        fullWidth
+                        style={marginStyle}
+                    >
+                        <InputLabel htmlFor="outlined-adornment-password">
+                            Confirm password
+                        </InputLabel>
+
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            placeholder="Confirm password"
+                            type={showConfirmPassword ? "text" : "password"}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowConfirmPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                    >
+                                        {showConfirmPassword ? (
+                                            <VisibilityOff />
+                                        ) : (
+                                            <Visibility />
+                                        )}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            value={confirmPassword}
+                            onChange={(e) =>
+                                inputChangeHandler(setConfirmPassword, e)
+                            }
+                            label="Confirm password"
+                        />
+                    </FormControl>
+
                     <div className="button-div">
-                        <div>
-                            Forgot password?
-                            <Link to="/reset-password-email"> Click here </Link>
-                            to reset password
-                        </div>
+                        <div></div>
 
                         <Button
                             variant="contained"
                             style={{
                                 backgroundColor: "#222222",
+                                marginTop: "15px",
                             }}
                             type="submit"
                         >
-                            Login
+                            Sign Up
                         </Button>
                     </div>
                 </form>
