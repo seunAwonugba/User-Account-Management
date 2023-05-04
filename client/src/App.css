@@ -117,6 +117,12 @@
     justify-content: space-between;
     width: 100%;
     height: auto;
+    padding-top: 15px;
+    /* background-color: #0f5132; */
+}
+
+.button-div a {
+    text-decoration: none;
 }
 
 .message-screen {

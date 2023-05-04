@@ -82,6 +82,8 @@ class UserService {
         user.isActive = true;
         await user.save();
 
+        await this.tokenRepository.deleteToken(id);
+
         await this.profileRepository.createUserProfile({
             firstName: user.firstName,
             lastName: user.lastName,

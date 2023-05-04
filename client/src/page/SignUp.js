@@ -21,7 +21,7 @@ import IconButton from "@mui/material/IconButton";
 export default function SignUp() {
     const navigate = useNavigate();
 
-    const paperStyle = { padding: "30px 20px", width: 500 };
+    const paperStyle = { padding: "30px 20px", width: 550 };
     const marginStyle = { marginTop: "15px" };
 
     const [firstName, setFirstName] = React.useState("");
