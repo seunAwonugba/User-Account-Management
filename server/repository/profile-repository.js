@@ -7,6 +7,16 @@ class ProfileRepository {
 
         return createProfile;
     }
+
+    async getProfile(userId) {
+        const userProfile = await profile.findOne({
+            where: {
+                userId,
+            },
+        });
+
+        return userProfile;
+    }
 }
 
 module.exports = { ProfileRepository };

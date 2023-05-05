@@ -9,6 +9,8 @@ const app = express();
 const port = 8000;
 const host = "localhost";
 const { errorMiddleware } = require("./middleware/errorMiddleware");
+const { profileRouter } = require("./router/profile");
+const { authMiddleware } = require("./middleware/authMiddleware");
 
 app.use(express.json());
 app.use(cors());
@@ -20,6 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/profile", authMiddleware, profileRouter);
 
 app.use(errorMiddleware);
 
