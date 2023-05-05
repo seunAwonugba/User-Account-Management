@@ -33,4 +33,16 @@ const emailSchema = Joi.object({
     }),
 });
 
-module.exports = { createUserSchema, emailSchema };
+const resetPasswordSchema = Joi.object({
+    password: Joi.string().trim().required().messages({
+        "any.required": "Password is required",
+        "string.empty": "Password cannot be empty",
+    }),
+    repeat_password: Joi.any().valid(Joi.ref("password")).required().messages({
+        "any.only": "Passwords do not match",
+        "any.required": "Confirm password is required",
+        "string.empty": "Confirm password cannot be empty",
+    }),
+});
+
+module.exports = { createUserSchema, emailSchema, resetPasswordSchema };

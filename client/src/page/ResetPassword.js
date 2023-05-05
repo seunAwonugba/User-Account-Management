@@ -17,6 +17,10 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 
+const params = window.location.search;
+const id = new URLSearchParams(params).get("id");
+const token = new URLSearchParams(params).get("token");
+
 export default function ResetPassword() {
     const navigate = useNavigate();
 
@@ -52,13 +56,14 @@ export default function ResetPassword() {
 
         try {
             const response = await baseUrl.post(
-                "/auth/create-user",
+                `/auth/reset-password/?id=${id}&token=${token}`,
                 userResponse
             );
+
             setIsLoading(false);
 
             if (response.data.success === true) {
-                navigate("/email-confirmation-sent");
+                navigate("/password-reset-success");
             } else {
                 setIsLoading(false);
                 toast.error(response.data.data);

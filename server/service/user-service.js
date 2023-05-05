@@ -3,8 +3,13 @@ const validator = require("validator");
 const {
     createUserSchema,
     emailSchema,
+    resetPasswordSchema,
 } = require("../validator/createUserSchema");
-const { UnprocessableEntity, BadRequest } = require("../error");
+const {
+    UnprocessableEntity,
+    BadRequest,
+    Unauthenticated,
+} = require("../error");
 const { GenerateToken, VerifyToken } = require("../utils");
 const { sendConfirmEmail, sendResetPasswordLink } = require("../utils/mailer");
 const { TokenRepository } = require("../repository/token-repository");
@@ -127,6 +132,37 @@ class UserService {
         return {
             success: true,
             data: `Reset password link sent to ${user.email}, proceed to your mail box to reset your password`,
+        };
+    }
+
+    async resetPassword(query, payload) {
+        if (!validator.default.isStrongPassword(payload.password)) {
+            throw new UnprocessableEntity(
+                "Your password must include a minimum of 8 characters, at least one number, and a combination of uppercase and lowercase letters."
+            );
+        }
+        await resetPasswordSchema.validateAsync(payload);
+
+        const user = await this.userRepository.findUserById(query.id);
+        if (!user) {
+            throw new BadRequest("User not found");
+        }
+
+        const decode = VerifyToken(query.token);
+        // console.log(decode);
+
+        if (decode.message) {
+            throw new Unauthenticated(
+                `${decode.message}: Request another password reset`
+            );
+        }
+
+        user.password = payload.password;
+        await user.save();
+
+        return {
+            success: true,
+            data: "Password reset successful",
         };
     }
 }

@@ -29,4 +29,17 @@ const sendPasswordResetLink = async (req, res, next) => {
         next(error);
     }
 };
-module.exports = { signUp, confirmEmail, sendPasswordResetLink };
+
+const resetPassword = async (req, res, next) => {
+    try {
+        const data = await userService.resetPassword(
+            { ...req.query },
+            { ...req.body }
+        );
+
+        return res.status(StatusCodes.CREATED).json(data);
+    } catch (error) {
+        next(error);
+    }
+};
+module.exports = { signUp, confirmEmail, sendPasswordResetLink, resetPassword };

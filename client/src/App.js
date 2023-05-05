@@ -11,6 +11,7 @@ import EmailConfirmation from "./page/EmailConfirmation";
 import ResetPassword from "./page/ResetPassword";
 import ResetPasswordEmail from "./page/ResetPasswordEmail";
 import ResetPasswordSent from "./page/ResetPasswordSent";
+import PasswordResetSuccess from "./page/PasswordResetSuccess";
 
 function App() {
     return (
@@ -39,6 +40,10 @@ function App() {
                         element={<ResetPasswordSent />}
                     />
                     <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route
+                        path="/password-reset-success"
+                        element={<PasswordResetSuccess />}
+                    />
                 </Routes>
                 <ToastContainer theme="dark" />
             </div>
