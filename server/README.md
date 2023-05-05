@@ -80,6 +80,16 @@ Executing (default): SELECT 1+1 AS result
 
 It means server is up and running
 
+## Security features:
+
+Helmet: Helmet helps you secure your Express apps by setting various HTTP headers.
+
+CORS: CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
+
+xss-clean: Node.js Connect middleware to sanitize user input coming from POST body, GET queries, and url params
+
+Express Rate Limit: Adds dynamic rate-limiting, authentication to our API
+
 **Here's an explanation of why we used each of the tools and libraries listed under "Built With":**
 
 ## Express.js
