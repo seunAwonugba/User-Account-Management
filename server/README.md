@@ -68,6 +68,18 @@ npm run dev
 
 Script used to start the development server in watch mode
 
+## Server up
+
+When you see
+
+Executing (default): SELECT 1+1 AS result
+
+⚡️[database]: Database connection has been established successfully.
+
+⚡️[server]: Server is listening on http://localhost:8000
+
+It means server is up and running
+
 **Here's an explanation of why we used each of the tools and libraries listed under "Built With":**
 
 ## Express.js

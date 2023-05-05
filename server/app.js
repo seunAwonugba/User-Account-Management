@@ -14,12 +14,6 @@ const { authMiddleware } = require("./middleware/authMiddleware");
 
 app.use(express.json());
 app.use(cors());
-app.get("/", (req, res) => {
-    return res.status(StatusCodes.OK).json({
-        success: true,
-        data: ReasonPhrases.OK,
-    });
-});
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/profile", authMiddleware, profileRouter);
