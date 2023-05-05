@@ -4,13 +4,14 @@ const {
     createUserSchema,
     emailSchema,
     resetPasswordSchema,
+    loginSchema,
 } = require("../validator/createUserSchema");
 const {
     UnprocessableEntity,
     BadRequest,
     Unauthenticated,
 } = require("../error");
-const { GenerateToken, VerifyToken } = require("../utils");
+const { GenerateToken, VerifyToken, ComparePasswords } = require("../utils");
 const { sendConfirmEmail, sendResetPasswordLink } = require("../utils/mailer");
 const { TokenRepository } = require("../repository/token-repository");
 const { ProfileRepository } = require("../repository/profile-repository");
@@ -163,6 +164,40 @@ class UserService {
         return {
             success: true,
             data: "Password reset successful",
+        };
+    }
+
+    async login(payload) {
+        const data = await loginSchema.validateAsync(payload);
+
+        const user = await this.userRepository.findUserByEmail(data.email);
+
+        if (!user) {
+            throw new Unauthenticated("User not found");
+        }
+
+        if (user.isActive != true) {
+            throw new Unauthenticated("Confirm password to proceed with login");
+        }
+
+        const comparePassword = await ComparePasswords(
+            data.password,
+            user.password
+        );
+
+        if (!comparePassword) {
+            throw new Unauthenticated("Wrong password");
+        }
+
+        const token = await GenerateToken({
+            id: data.id,
+            email: data.email,
+        });
+
+        return {
+            success: true,
+            data: user,
+            token,
         };
     }
 }

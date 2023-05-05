@@ -42,4 +42,20 @@ const resetPassword = async (req, res, next) => {
         next(error);
     }
 };
-module.exports = { signUp, confirmEmail, sendPasswordResetLink, resetPassword };
+
+const login = async (req, res, next) => {
+    try {
+        const data = await userService.login(req.body);
+
+        return res.status(StatusCodes.OK).json(data);
+    } catch (error) {
+        next(error);
+    }
+};
+module.exports = {
+    signUp,
+    confirmEmail,
+    sendPasswordResetLink,
+    resetPassword,
+    login,
+};

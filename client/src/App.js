@@ -12,6 +12,7 @@ import ResetPassword from "./page/ResetPassword";
 import ResetPasswordEmail from "./page/ResetPasswordEmail";
 import ResetPasswordSent from "./page/ResetPasswordSent";
 import PasswordResetSuccess from "./page/PasswordResetSuccess";
+import Profile from "./page/Profile";
 
 function App() {
     return (
@@ -44,6 +45,7 @@ function App() {
                         path="/password-reset-success"
                         element={<PasswordResetSuccess />}
                     />
+                    <Route path="/profile" element={<Profile />} />
                 </Routes>
                 <ToastContainer theme="dark" />
             </div>

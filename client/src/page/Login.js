@@ -48,14 +48,12 @@ export default function Login() {
         };
 
         try {
-            const response = await baseUrl.post(
-                "/auth/reset-password",
-                userResponse
-            );
+            const response = await baseUrl.post("/auth/login", userResponse);
             setIsLoading(false);
+            console.log(response);
 
             if (response.data.success === true) {
-                navigate("/email-confirmation-sent");
+                navigate("/profile");
             } else {
                 setIsLoading(false);
                 toast.error(response.data.data);
