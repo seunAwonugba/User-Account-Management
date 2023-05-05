@@ -173,7 +173,7 @@ class UserService {
         const user = await this.userRepository.findUserByEmail(data.email);
 
         if (!user) {
-            throw new Unauthenticated("User not found");
+            throw new Unauthenticated("Wrong email address or password");
         }
 
         if (user.isActive != true) {
@@ -186,7 +186,7 @@ class UserService {
         );
 
         if (!comparePassword) {
-            throw new Unauthenticated("Wrong password");
+            throw new Unauthenticated("Wrong email address or password");
         }
 
         const token = await GenerateToken({

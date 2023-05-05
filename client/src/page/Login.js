@@ -17,7 +17,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 
-export default function Login() {
+export default function Login({ handleLogin }) {
     const navigate = useNavigate();
 
     const paperStyle = { padding: "30px 20px", width: 550 };
@@ -54,6 +54,7 @@ export default function Login() {
 
             if (response.data.success === true) {
                 navigate("/profile");
+                handleLogin(response.data.token);
             } else {
                 setIsLoading(false);
                 toast.error(response.data.data);

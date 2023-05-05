@@ -13,15 +13,33 @@ import ResetPasswordEmail from "./page/ResetPasswordEmail";
 import ResetPasswordSent from "./page/ResetPasswordSent";
 import PasswordResetSuccess from "./page/PasswordResetSuccess";
 import Profile from "./page/Profile";
+import { useState } from "react";
 
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        Boolean(localStorage.getItem("user_management_token"))
+    );
+
+    const handleLogin = (token) => {
+        localStorage.setItem("user_management_token", token);
+        setIsLoggedIn(true);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("user_management_token");
+        setIsLoggedIn(false);
+    };
+
     return (
         <>
-            <NavBar />
+            <NavBar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
             <div className="container">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route
+                        path="/login"
+                        element={<Login handleLogin={handleLogin} />}
+                    />
                     <Route path="/sign-up" element={<SignUp />} />
 
                     <Route
